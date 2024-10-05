@@ -1,17 +1,20 @@
-import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-spatial-sdk';
+import { usePanel } from 'react-native-spatial-sdk';
+
+function PanelView() {
+  return (
+    <View style={{ flex: 1, backgroundColor: 'red' }}>
+      <Text>Panel</Text>
+    </View>
+  );
+}
 
 export default function App() {
-  const [result, setResult] = useState<number | undefined>();
-
-  useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
+  const Panel = usePanel(PanelView, { width: 1, height: 1 });
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Panel />
     </View>
   );
 }

@@ -183,5 +183,13 @@
     "type": "module-legacy",
     "languages": "kotlin-objc",
     "version": "0.41.2"
+  },
+  "codegenConfig": {
+    "name": "RNSpatialSdk",
+    "type": "all",
+    "jsSrcsDir": "./src/specs",
+    "android": {
+      "javaPackageName": "com.jpiasecki.spatialsdk"
+    }
   }
 }
