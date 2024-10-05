@@ -105,6 +105,13 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+
+    buildFeatures { buildConfig = true }
+    flavorDimensions += "device"
+    productFlavors {
+        create("mobile") { dimension = "device" }
+        create("quest") { dimension = "device" }
+    }
 }
 
 dependencies {
