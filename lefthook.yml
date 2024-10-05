@@ -1,0 +1,5 @@
+pre-commit:
+  commands:
+    format-js:
+      run: yarn lint-staged
+

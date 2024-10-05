@@ -1,9 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { Grabbable, GrabbableType, usePanel } from 'react-native-spatial-sdk';
-
-import type { Position, Orientation } from 'react-native-spatial-sdk';
+import type { Orientation, Position } from 'react-native-spatial-sdk';
 
 function PanelView() {
   return (

@@ -1,8 +1,8 @@
+import type { PanelConfig } from './specs/NativeSpatialPanelModule';
+import NativePanelModule from './specs/NativeSpatialPanelModule';
+import PanelNativeComponent from './specs/PanelNativeComponent';
 import { useCallback, useState } from 'react';
 import { AppRegistry, StyleSheet } from 'react-native';
-import NativePanelModule from './specs/NativeSpatialPanelModule';
-import type { PanelConfig } from './specs/NativeSpatialPanelModule';
-import PanelNativeComponent from './specs/PanelNativeComponent';
 
 const ENTRY_POINT_PREFIX = '_SpatialEntryPoint_';
 let nextEntryPointId = 0;
