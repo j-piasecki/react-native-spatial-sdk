@@ -11,7 +11,6 @@ export type Position = [x: number, y: number, z: number];
 export type Orientation = [pitch: number, yaw: number, roll: number];
 
 interface PanelProps {
-  anchored?: boolean;
   position?: Position;
   orientation?: Orientation;
 }
@@ -33,7 +32,6 @@ export function usePanel(content: React.ComponentType, config: PanelConfig) {
         <PanelNativeComponent
           panelId={panelId}
           style={styles.panel}
-          anchored={props.anchored}
           position={props.position}
           orientation={props.orientation}
         />

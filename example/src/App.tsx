@@ -1,10 +1,15 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
-import { Orientation, Position, usePanel } from 'react-native-spatial-sdk';
+import { Grabbable, GrabbableType, usePanel } from 'react-native-spatial-sdk';
+
+import type { Position, Orientation } from 'react-native-spatial-sdk';
 
 function PanelView() {
   return (
-    <View style={{ flex: 1, backgroundColor: 'red', borderRadius: 80, padding: 16 }}>
+    <View
+      style={{ flex: 1, backgroundColor: 'red', borderRadius: 80, padding: 16 }}
+    >
       <Text>Panel</Text>
     </View>
   );
@@ -13,7 +18,7 @@ function PanelView() {
 function Content() {
   const Panel = usePanel(PanelView, { width: 1, height: 1 });
   const [anchored, setAnchored] = useState(false);
-  const [position, setPosition] = useState<Position>([2, 1.3, 2]);
+  const [position, _setPosition] = useState<Position>([2, 1.3, 2]);
   const [orientation, setOrientation] = useState<Orientation>([0, 20, 0]);
 
   return (
@@ -31,11 +36,9 @@ function Content() {
           setOrientation([orientation[0], orientation[1], orientation[2] - 0.1])
         }
       />
-      <Panel
-        anchored={anchored}
-        position={position}
-        orientation={orientation}
-      />
+      <Grabbable enabled={!anchored} type={GrabbableType.PivotY}>
+        <Panel position={position} orientation={orientation} />
+      </Grabbable>
     </View>
   );
 }

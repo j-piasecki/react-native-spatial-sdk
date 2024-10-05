@@ -4,7 +4,6 @@ import type { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
 
 export interface NativeProps extends ViewProps {
   panelId: Int32;
-  anchored?: boolean;
   position?: number[];
   orientation?: number[];
 }

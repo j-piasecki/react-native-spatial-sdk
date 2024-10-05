@@ -6,7 +6,6 @@ import com.meta.spatial.core.Entity
 import com.meta.spatial.core.Pose
 import com.meta.spatial.core.Quaternion
 import com.meta.spatial.core.Vector3
-import com.meta.spatial.toolkit.Grabbable
 import com.meta.spatial.toolkit.Transform
 import com.meta.spatial.toolkit.createPanelEntity
 
@@ -16,7 +15,6 @@ class PanelView(reactContext: ReactContext) : ReactViewGroup(reactContext), Enti
   override val entity: Entity?
     get() = data?.entity
 
-  private var anchored = false
   private var position = Vector3(0f, 1.3f, 2f)
   private var orientation = Quaternion(0f, 0f, 0f)
 
@@ -45,23 +43,14 @@ class PanelView(reactContext: ReactContext) : ReactViewGroup(reactContext), Enti
     }
   }
 
-  fun setAnchored(anchored: Boolean) {
-    this.anchored = anchored
-
-    entity?.also {
-      val grabbable = it.getComponent<Grabbable>()
-      grabbable.enabled = !anchored
-      it.setComponent(grabbable)
-    }
-  }
-
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     data?.entity = Entity.createPanelEntity(
       panelId,
       Transform(Pose(position, orientation)),
-      Grabbable(enabled = !anchored)
     )
+
+    tryAttachComponents(this)
   }
 
   override fun onDetachedFromWindow() {
