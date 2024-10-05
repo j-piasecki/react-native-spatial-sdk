@@ -1,5 +1,6 @@
 package com.jpiasecki.spatialsdk
 
+import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.SimpleViewManager
 import com.facebook.react.uimanager.ThemedReactContext
@@ -23,6 +24,30 @@ class PanelViewManager : SimpleViewManager<PanelView>(), RNSpatialPanelViewManag
 
   companion object {
     const val NAME = "RNSpatialPanelView"
+  }
+
+  override fun setPosition(view: PanelView, value: ReadableArray?) {
+    if (value != null) {
+      view.setPosition(
+        value.getDouble(0).toFloat(),
+        value.getDouble(1).toFloat(),
+        value.getDouble(2).toFloat()
+      )
+    }
+  }
+
+  override fun setOrientation(view: PanelView, value: ReadableArray?) {
+    if (value != null) {
+      view.setOrientation(
+        value.getDouble(0).toFloat(),
+        value.getDouble(1).toFloat(),
+        value.getDouble(2).toFloat()
+      )
+    }
+  }
+
+  override fun setAnchored(view: PanelView, value: Boolean) {
+    view.setAnchored(value)
   }
 }
 

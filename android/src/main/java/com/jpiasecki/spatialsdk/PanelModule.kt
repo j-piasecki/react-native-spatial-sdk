@@ -15,14 +15,13 @@ class PanelModule(reactContext: ReactApplicationContext) : NativeSpatialPanelMod
   @ReactMethod
   override fun registerPanel(entryPoint: String, config: ReadableMap): Double {
     val id = getDisposableId()
+    PanelRegistry.registerPanel(id, PanelData(entryPoint))
 
     val panelWidth = config.getDouble("width").toFloat()
     val panelHeight = config.getDouble("height").toFloat()
 
     val activity = reactApplicationContext.currentActivity as ImmersiveReactActivity
     val app = activity.application as ReactApplication
-    val reactSurface = app.reactHost?.createSurface(activity, entryPoint, null)!!
-    reactSurface.start()
 
     activity.registerPanel(PanelRegistration(id) {
       config {
@@ -32,21 +31,14 @@ class PanelModule(reactContext: ReactApplicationContext) : NativeSpatialPanelMod
         enableTransparent = true
       }
       view {
+        val reactSurface = app.reactHost?.createSurface(activity, entryPoint, null)!!
+        reactSurface.start()
+        PanelRegistry.getPanel(id)!!.reactSurface = reactSurface
         reactSurface.view!!
       }
     })
 
-    PanelRegistry.registerPanel(id, PanelData(entryPoint, reactSurface))
-
     return id.toDouble()
-  }
-
-  override fun unregisterPanel(panelId: Double) {
-    PanelRegistry.getPanel(panelId.toInt())?.let {
-      it.surface.stop()
-      it.surface.detach()
-    }
-    PanelRegistry.unregisterPanel(panelId.toInt())
   }
 
   companion object {

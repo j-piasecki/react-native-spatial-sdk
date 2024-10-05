@@ -10,15 +10,22 @@ object PanelRegistry {
     panels[id] = data
   }
 
-  fun unregisterPanel(id: Int) {
-    panels.remove(id)
-  }
-
   fun getPanel(id: Int) = panels[id]
 }
 
 data class PanelData(
   val entryPoint: String,
-  val surface: ReactSurface,
-  val entity: Entity? = null
-)
+  var entity: Entity? = null
+) {
+  var reactSurface: ReactSurface? = null
+
+  fun stopSurface() {
+    reactSurface?.let {
+      it.stop()
+      it.detach()
+    }
+    entity?.destroy()
+
+    reactSurface = null
+  }
+}

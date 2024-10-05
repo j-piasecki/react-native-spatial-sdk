@@ -12,25 +12,60 @@ import com.meta.spatial.toolkit.createPanelEntity
 
 class PanelView(reactContext: ReactContext) : ReactViewGroup(reactContext) {
   private var panelId = -1
-  private var entity: Entity? = null
+  private var data: PanelData? = null
+  private val entity: Entity?
+    get() = data?.entity
+
+  private var anchored = false
+  private var position = Vector3(0f, 1.3f, 2f)
+  private var orientation = Quaternion(0f, 0f, 0f)
 
   fun setPanelId(id: Int) {
     panelId = id
+    data = PanelRegistry.getPanel(panelId)
+  }
+
+  fun setPosition(x: Float, y: Float, z: Float) {
+    this.position = Vector3(x, y, z)
+
+    entity?.let {
+      val transform = it.getComponent<Transform>()
+      transform.transform.t = this.position
+      it.setComponent(transform)
+    }
+  }
+
+  fun setOrientation(pitch: Float, yaw: Float, roll: Float) {
+    this.orientation = Quaternion(pitch, yaw, roll)
+
+    entity?.let {
+      val transform = it.getComponent<Transform>()
+      transform.transform.q = this.orientation
+      it.setComponent(transform)
+    }
+  }
+
+  fun setAnchored(anchored: Boolean) {
+    this.anchored = anchored
+
+    entity?.also {
+      val grabbable = it.getComponent<Grabbable>()
+      grabbable.enabled = !anchored
+      it.setComponent(grabbable)
+    }
   }
 
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
-
-    entity = Entity.createPanelEntity(
+    data?.entity = Entity.createPanelEntity(
       panelId,
-      Transform(Pose(Vector3(0f, 1.3f, 2f), Quaternion(0f, 0f, 0f))),
-      Grabbable()
+      Transform(Pose(position, orientation)),
+      Grabbable(enabled = !anchored)
     )
   }
 
   override fun onDetachedFromWindow() {
     super.onDetachedFromWindow()
-
-    entity!!.destroy()
+    PanelRegistry.getPanel(panelId)?.stopSurface()
   }
 }

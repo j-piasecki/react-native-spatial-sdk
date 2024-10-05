@@ -1,5 +1,6 @@
-import { StyleSheet, View, Text } from 'react-native';
-import { usePanel } from 'react-native-spatial-sdk';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Button } from 'react-native';
+import { Orientation, Position, usePanel } from 'react-native-spatial-sdk';
 
 function PanelView() {
   return (
@@ -9,14 +10,48 @@ function PanelView() {
   );
 }
 
-export default function App() {
+function Content() {
   const Panel = usePanel(PanelView, { width: 1, height: 1 });
+  const [anchored, setAnchored] = useState(false);
+  const [position, setPosition] = useState<Position>([2, 1.3, 2]);
+  const [orientation, setOrientation] = useState<Orientation>([0, 20, 0]);
 
   return (
     <View style={styles.container}>
-      <Panel />
+      <Button title="Toggle Anchored" onPress={() => setAnchored(!anchored)} />
+      <Button
+        title="Increase roll"
+        onPress={() =>
+          setOrientation([orientation[0], orientation[1], orientation[2] + 0.1])
+        }
+      />
+      <Button
+        title="Decrease roll"
+        onPress={() =>
+          setOrientation([orientation[0], orientation[1], orientation[2] - 0.1])
+        }
+      />
+      <Panel
+        anchored={anchored}
+        position={position}
+        orientation={orientation}
+      />
     </View>
   );
+}
+
+const STRICT_MODE = false;
+
+export default function App() {
+  if (STRICT_MODE) {
+    return (
+      <React.StrictMode>
+        <Content />
+      </React.StrictMode>
+    );
+  } else {
+    return <Content />;
+  }
 }
 
 const styles = StyleSheet.create({

@@ -18,6 +18,7 @@ import com.meta.spatial.core.SpatialFeature
 import com.meta.spatial.core.Vector3
 import com.meta.spatial.runtime.ReferenceSpace
 import com.meta.spatial.toolkit.AppSystemActivity
+import com.meta.spatial.toolkit.Grabbable
 import com.meta.spatial.toolkit.PanelRegistration
 import com.meta.spatial.toolkit.Transform
 import com.meta.spatial.toolkit.createPanelEntity
@@ -57,7 +58,8 @@ open class ImmersiveReactActivity : AppSystemActivity(), DefaultHardwareBackBtnH
 
     Entity.createPanelEntity(
       R.id.main_panel,
-      Transform(Pose(Vector3(0f, 1.3f, 2f), Quaternion(0f, 0f, 0f)))
+      Transform(Pose(Vector3(0f, 1.3f, 2f), Quaternion(0f, 0f, 0f))),
+      Grabbable()
     )
   }
 
