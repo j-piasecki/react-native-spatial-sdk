@@ -46,6 +46,7 @@ class PanelModule(reactContext: ReactApplicationContext) : NativeSpatialPanelMod
           val reactSurface = app.reactHost?.createSurface(activity, entryPoint, null)!!
           reactSurface.start()
           PanelRegistry.getPanel(id)!!.reactSurface = reactSurface
+          // TODO: check if necessary
           reactSurface.view!!.doOnAttach {
             clearBackgroundUpwards(it)
           }

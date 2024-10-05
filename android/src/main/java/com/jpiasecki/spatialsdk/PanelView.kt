@@ -33,6 +33,10 @@ class PanelView(private val reactContext: ReactContext) :
       val transform = it.getComponent<Transform>()
       transform.transform.t = this.position
       it.setComponent(transform)
+
+      val observer = it.getComponent<ObserverComponent>()
+      observer.previousPosition = this.position
+      it.setComponent(observer)
     }
   }
 
@@ -43,6 +47,10 @@ class PanelView(private val reactContext: ReactContext) :
       val transform = it.getComponent<Transform>()
       transform.transform.q = this.orientation
       it.setComponent(transform)
+
+      val observer = it.getComponent<ObserverComponent>()
+      observer.previousOrientation = Vector3(pitch, yaw, roll)
+      it.setComponent(observer)
     }
   }
 
