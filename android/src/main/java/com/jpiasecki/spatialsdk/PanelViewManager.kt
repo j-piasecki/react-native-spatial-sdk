@@ -8,15 +8,15 @@ import com.facebook.react.viewmanagers.RNSpatialPanelViewManagerDelegate
 import com.facebook.react.viewmanagers.RNSpatialPanelViewManagerInterface
 
 @ReactModule(name = PanelViewManager.NAME)
-class PanelViewManager : ViewGroupManager<PanelView>(), RNSpatialPanelViewManagerInterface<PanelView> {
+class PanelViewManager :
+  ViewGroupManager<PanelView>(),
+  RNSpatialPanelViewManagerInterface<PanelView> {
   private val delegate = RNSpatialPanelViewManagerDelegate(this)
 
   override fun getDelegate() = delegate
   override fun getName() = NAME
 
-  override fun createViewInstance(reactContext: ThemedReactContext): PanelView {
-    return PanelView(reactContext)
-  }
+  override fun createViewInstance(reactContext: ThemedReactContext): PanelView = PanelView(reactContext)
 
   override fun setPanelId(view: PanelView, id: Int) {
     view.setPanelId(id)
@@ -27,7 +27,7 @@ class PanelViewManager : ViewGroupManager<PanelView>(), RNSpatialPanelViewManage
       view.setPosition(
         value.getDouble(0).toFloat(),
         value.getDouble(1).toFloat(),
-        value.getDouble(2).toFloat()
+        value.getDouble(2).toFloat(),
       )
     }
   }
@@ -37,7 +37,7 @@ class PanelViewManager : ViewGroupManager<PanelView>(), RNSpatialPanelViewManage
       view.setOrientation(
         value.getDouble(0).toFloat(),
         value.getDouble(1).toFloat(),
-        value.getDouble(2).toFloat()
+        value.getDouble(2).toFloat(),
       )
     }
   }
@@ -46,4 +46,3 @@ class PanelViewManager : ViewGroupManager<PanelView>(), RNSpatialPanelViewManage
     const val NAME = "RNSpatialPanelView"
   }
 }
-

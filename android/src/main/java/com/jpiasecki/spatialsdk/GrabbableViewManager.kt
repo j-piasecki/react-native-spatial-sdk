@@ -8,15 +8,15 @@ import com.facebook.react.viewmanagers.RNSpatialGrabbableViewManagerInterface
 import com.meta.spatial.toolkit.GrabbableType
 
 @ReactModule(name = GrabbableViewManager.NAME)
-class GrabbableViewManager : ViewGroupManager<GrabbableView>(), RNSpatialGrabbableViewManagerInterface<GrabbableView> {
+class GrabbableViewManager :
+  ViewGroupManager<GrabbableView>(),
+  RNSpatialGrabbableViewManagerInterface<GrabbableView> {
   private val delegate = RNSpatialGrabbableViewManagerDelegate(this)
 
   override fun getDelegate() = delegate
   override fun getName() = NAME
 
-  override fun createViewInstance(reactContext: ThemedReactContext): GrabbableView {
-    return GrabbableView(reactContext)
-  }
+  override fun createViewInstance(reactContext: ThemedReactContext): GrabbableView = GrabbableView(reactContext)
 
   override fun setEnabled(view: GrabbableView, value: Boolean) {
     view.setIsEnabled(value)
@@ -31,4 +31,3 @@ class GrabbableViewManager : ViewGroupManager<GrabbableView>(), RNSpatialGrabbab
     const val NAME = "RNSpatialGrabbableView"
   }
 }
-

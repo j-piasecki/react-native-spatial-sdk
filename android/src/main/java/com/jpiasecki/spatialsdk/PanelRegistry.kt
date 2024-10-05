@@ -15,7 +15,7 @@ object PanelRegistry {
 
 data class PanelData(
   val entryPoint: String,
-  var entity: Entity? = null
+  var entity: Entity? = null,
 ) {
   var reactSurface: ReactSurface? = null
 

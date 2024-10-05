@@ -1,5 +1,5 @@
 package com.jpiasecki.spatialsdk
 
-var NextDisposableID = 0
+var nextDisposableID = 0
 
-fun getDisposableId() = NextDisposableID++
+fun getDisposableId() = nextDisposableID++

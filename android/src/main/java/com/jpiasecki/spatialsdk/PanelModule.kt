@@ -33,24 +33,26 @@ class PanelModule(reactContext: ReactApplicationContext) : NativeSpatialPanelMod
     val activity = reactApplicationContext.currentActivity as ImmersiveReactActivity
     val app = activity.application as ReactApplication
 
-    activity.registerPanel(PanelRegistration(id) {
-      config {
-        themeResourceId = R.style.Panel_Transparent
-        width = panelWidth
-        height = panelHeight
-        enableLayer = true
-        enableTransparent = true
-      }
-      view {
-        val reactSurface = app.reactHost?.createSurface(activity, entryPoint, null)!!
-        reactSurface.start()
-        PanelRegistry.getPanel(id)!!.reactSurface = reactSurface
-        reactSurface.view!!.doOnAttach {
-          clearBackgroundUpwards(it)
+    activity.registerPanel(
+      PanelRegistration(id) {
+        config {
+          themeResourceId = R.style.Panel_Transparent
+          width = panelWidth
+          height = panelHeight
+          enableLayer = true
+          enableTransparent = true
         }
-        reactSurface.view!!
-      }
-    })
+        view {
+          val reactSurface = app.reactHost?.createSurface(activity, entryPoint, null)!!
+          reactSurface.start()
+          PanelRegistry.getPanel(id)!!.reactSurface = reactSurface
+          reactSurface.view!!.doOnAttach {
+            clearBackgroundUpwards(it)
+          }
+          reactSurface.view!!
+        }
+      },
+    )
 
     return id.toDouble()
   }

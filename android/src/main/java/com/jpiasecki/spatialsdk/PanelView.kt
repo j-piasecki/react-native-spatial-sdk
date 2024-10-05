@@ -9,7 +9,9 @@ import com.meta.spatial.core.Vector3
 import com.meta.spatial.toolkit.Transform
 import com.meta.spatial.toolkit.createPanelEntity
 
-class PanelView(reactContext: ReactContext) : ReactViewGroup(reactContext), EntityHolder {
+class PanelView(reactContext: ReactContext) :
+  ReactViewGroup(reactContext),
+  EntityHolder {
   private var panelId = -1
   private var data: PanelData? = null
   override val entity: Entity?

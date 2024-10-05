@@ -7,11 +7,8 @@ import com.facebook.react.module.model.ReactModuleInfo
 import com.facebook.react.module.model.ReactModuleInfoProvider
 import com.facebook.react.uimanager.ViewManager
 
-
 class SpatialSdkPackage : TurboReactPackage() {
-  override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
-    return listOf(PanelViewManager(), GrabbableViewManager())
-  }
+  override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> = listOf(PanelViewManager(), GrabbableViewManager())
 
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? =
     if (name == PanelModule.NAME) {
@@ -28,8 +25,8 @@ class SpatialSdkPackage : TurboReactPackage() {
         false, // canOverrideExistingModule
         false, // needsEagerInit
         false, // isCxxModule
-        true // isTurboModule
-      )
+        true, // isTurboModule
+      ),
     )
   }
 }

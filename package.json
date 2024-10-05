@@ -43,7 +43,8 @@
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
     "release": "release-it",
-    "format": "prettier --write \"**/*.{js,ts,tsx,json}\""
+    "format:js": "prettier --write \"**/*.{js,ts,tsx,json}\"",
+    "format:kotlin": "./android/gradlew spotlessApply -p android"
   },
   "keywords": [
     "react-native",

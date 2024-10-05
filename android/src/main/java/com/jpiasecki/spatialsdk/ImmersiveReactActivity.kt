@@ -24,7 +24,9 @@ import com.meta.spatial.toolkit.Transform
 import com.meta.spatial.toolkit.createPanelEntity
 import com.meta.spatial.vr.VRFeature
 
-open class ImmersiveReactActivity : AppSystemActivity(), DefaultHardwareBackBtnHandler,
+open class ImmersiveReactActivity :
+  AppSystemActivity(),
+  DefaultHardwareBackBtnHandler,
   PermissionAwareActivity {
   private lateinit var reactSurface: ReactSurface
 
@@ -38,9 +40,7 @@ open class ImmersiveReactActivity : AppSystemActivity(), DefaultHardwareBackBtnH
 
   protected open fun getMainComponentName(): String = "App"
 
-  override fun registerFeatures(): List<SpatialFeature> {
-    return listOf(VRFeature(this))
-  }
+  override fun registerFeatures(): List<SpatialFeature> = listOf(VRFeature(this))
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -59,24 +59,22 @@ open class ImmersiveReactActivity : AppSystemActivity(), DefaultHardwareBackBtnH
     Entity.createPanelEntity(
       R.id.main_panel,
       Transform(Pose(Vector3(0f, 1.3f, 2f), Quaternion(0f, 0f, 0f))),
-      Grabbable()
+      Grabbable(),
     )
   }
 
-  override fun registerPanels(): List<PanelRegistration> {
-    return listOf(
-      PanelRegistration(R.id.main_panel) {
-        config {
-          height = 1.2f
-          width = 1.6f
-          enableLayer = true
-        }
-        view {
-          reactSurface.view!!
-        }
+  override fun registerPanels(): List<PanelRegistration> = listOf(
+    PanelRegistration(R.id.main_panel) {
+      config {
+        height = 1.2f
+        width = 1.6f
+        enableLayer = true
       }
-    )
-  }
+      view {
+        reactSurface.view!!
+      }
+    },
+  )
 
   override fun onResume() {
     super.onResume()
@@ -103,17 +101,11 @@ open class ImmersiveReactActivity : AppSystemActivity(), DefaultHardwareBackBtnH
     reactDelegate.onActivityResult(requestCode, resultCode, data, true)
   }
 
-  override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-    return reactDelegate.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)
-  }
+  override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean = reactDelegate.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event)
 
-  override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-    return reactDelegate.shouldShowDevMenuOrReload(keyCode, event) || super.onKeyUp(keyCode, event)
-  }
+  override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean = reactDelegate.shouldShowDevMenuOrReload(keyCode, event) || super.onKeyUp(keyCode, event)
 
-  override fun onKeyLongPress(keyCode: Int, event: KeyEvent?): Boolean {
-    return reactDelegate.onKeyLongPress(keyCode) || super.onKeyLongPress(keyCode, event)
-  }
+  override fun onKeyLongPress(keyCode: Int, event: KeyEvent?): Boolean = reactDelegate.onKeyLongPress(keyCode) || super.onKeyLongPress(keyCode, event)
 
   override fun onBackPressed() {
     if (!reactDelegate.onBackPressed()) {
@@ -134,7 +126,7 @@ open class ImmersiveReactActivity : AppSystemActivity(), DefaultHardwareBackBtnH
   override fun requestPermissions(
     permissions: Array<String?>,
     requestCode: Int,
-    listener: PermissionListener?
+    listener: PermissionListener?,
   ) {
     this.permissionListener = listener
     this.requestPermissions(permissions, requestCode)
@@ -143,7 +135,7 @@ open class ImmersiveReactActivity : AppSystemActivity(), DefaultHardwareBackBtnH
   override fun onRequestPermissionsResult(
     requestCode: Int,
     permissions: Array<String?>,
-    grantResults: IntArray
+    grantResults: IntArray,
   ) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     this.permissionsCallback =
@@ -151,7 +143,7 @@ open class ImmersiveReactActivity : AppSystemActivity(), DefaultHardwareBackBtnH
         if (this.permissionListener?.onRequestPermissionsResult(
             requestCode,
             permissions,
-            grantResults
+            grantResults,
           ) == true
         ) {
           this.permissionListener = null

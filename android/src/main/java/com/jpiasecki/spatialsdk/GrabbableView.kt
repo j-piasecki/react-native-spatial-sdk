@@ -5,7 +5,9 @@ import com.facebook.react.views.view.ReactViewGroup
 import com.meta.spatial.toolkit.Grabbable
 import com.meta.spatial.toolkit.GrabbableType
 
-class GrabbableView(reactContext: ReactContext): ReactViewGroup(reactContext), ComponentHolder {
+class GrabbableView(reactContext: ReactContext) :
+  ReactViewGroup(reactContext),
+  ComponentHolder {
   override val component = Grabbable()
 
   fun setIsEnabled(enabled: Boolean) = tryReattachAfter {
