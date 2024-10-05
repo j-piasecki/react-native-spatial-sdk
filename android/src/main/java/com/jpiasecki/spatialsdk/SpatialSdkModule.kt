@@ -1,4 +1,4 @@
-package com.spatialsdk
+package com.jpiasecki.spatialsdk
 
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule

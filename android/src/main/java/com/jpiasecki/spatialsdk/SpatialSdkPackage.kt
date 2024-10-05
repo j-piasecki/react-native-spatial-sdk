@@ -1,4 +1,4 @@
-package com.spatialsdk
+package com.jpiasecki.spatialsdk
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule

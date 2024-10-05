@@ -49,7 +49,7 @@ def supportsNamespace() {
 
 android {
   if (supportsNamespace()) {
-    namespace "com.spatialsdk"
+    namespace "com.jpiasecki.spatialsdk"
 
     sourceSets {
       main {
@@ -88,6 +88,7 @@ repositories {
 }
 
 def kotlin_version = getExtOrDefault("kotlinVersion")
+def metaSpatialSdkVersion = getExtOrDefault("metaSpatialSdkVersion")
 
 dependencies {
   // For < 0.71, this will be from the local maven repo
@@ -95,5 +96,9 @@ dependencies {
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  api "com.meta.spatial:meta-spatial-sdk:$metaSpatialSdkVersion"
+  api "com.meta.spatial:meta-spatial-sdk-toolkit:$metaSpatialSdkVersion"
+  api "com.meta.spatial:meta-spatial-sdk-vr:$metaSpatialSdkVersion"
 }
 
