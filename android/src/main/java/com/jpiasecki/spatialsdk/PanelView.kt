@@ -10,10 +10,10 @@ import com.meta.spatial.toolkit.Grabbable
 import com.meta.spatial.toolkit.Transform
 import com.meta.spatial.toolkit.createPanelEntity
 
-class PanelView(reactContext: ReactContext) : ReactViewGroup(reactContext) {
+class PanelView(reactContext: ReactContext) : ReactViewGroup(reactContext), EntityHolder {
   private var panelId = -1
   private var data: PanelData? = null
-  private val entity: Entity?
+  override val entity: Entity?
     get() = data?.entity
 
   private var anchored = false
