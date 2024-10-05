@@ -2,7 +2,11 @@ import type { PanelConfig } from './specs/NativeSpatialPanelModule';
 import NativePanelModule from './specs/NativeSpatialPanelModule';
 import PanelNativeComponent from './specs/PanelNativeComponent';
 import { useCallback, useState } from 'react';
-import { AppRegistry, StyleSheet } from 'react-native';
+import {
+  AppRegistry,
+  StyleSheet,
+  type NativeSyntheticEvent,
+} from 'react-native';
 
 const ENTRY_POINT_PREFIX = '_SpatialEntryPoint_';
 let nextEntryPointId = 0;
@@ -10,9 +14,26 @@ let nextEntryPointId = 0;
 export type Position = [x: number, y: number, z: number];
 export type Orientation = [pitch: number, yaw: number, roll: number];
 
+type PositionChangeEvent = {
+  x: number;
+  y: number;
+  z: number;
+};
+
+type OrientationChangeEvent = {
+  pitch: number;
+  yaw: number;
+  roll: number;
+};
+
 interface PanelProps {
   position?: Position;
   orientation?: Orientation;
+
+  onPositionChange?: (event: NativeSyntheticEvent<PositionChangeEvent>) => void;
+  onOrientationChange?: (
+    event: NativeSyntheticEvent<OrientationChangeEvent>
+  ) => void;
 }
 
 export function usePanel(content: React.ComponentType, config: PanelConfig) {
@@ -34,6 +55,8 @@ export function usePanel(content: React.ComponentType, config: PanelConfig) {
           style={styles.panel}
           position={props.position}
           orientation={props.orientation}
+          onPositionChange={props.onPositionChange}
+          onOrientationChange={props.onOrientationChange}
         />
       );
     },

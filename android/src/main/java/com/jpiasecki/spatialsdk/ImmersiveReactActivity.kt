@@ -46,8 +46,13 @@ open class ImmersiveReactActivity :
     super.onCreate(savedInstanceState)
 
     val app = application as ReactApplication
-    reactSurface = app.reactHost?.createSurface(this, getMainComponentName(), null)!!
+
+    reactSurface = app.reactHost!!.createSurface(this, getMainComponentName(), null)!!
     reactSurface.start()
+
+    componentManager.registerComponent<ObserverComponent>(ObserverComponent.Companion)
+
+    systemManager.registerSystem(ObserverSystem(app))
   }
 
   override fun onSceneReady() {

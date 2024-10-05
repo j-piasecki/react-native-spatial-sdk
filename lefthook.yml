@@ -3,5 +3,5 @@ pre-commit:
     format-js:
       run: yarn lint-staged
     format-kotlin:
-      run: yarn format:kotlin
+      run: yarn format:kotlin && git add \*.kt
 

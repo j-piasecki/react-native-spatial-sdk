@@ -42,6 +42,12 @@ class PanelViewManager :
     }
   }
 
+  override fun getExportedCustomDirectEventTypeConstants(): MutableMap<String, Any> =
+    mutableMapOf(
+      PositionChangeEvent.NAME to mapOf("registrationName" to "onPositionChange"),
+      OrientationChangeEvent.NAME to mapOf("registrationName" to "onOrientationChange"),
+    )
+
   companion object {
     const val NAME = "RNSpatialPanelView"
   }

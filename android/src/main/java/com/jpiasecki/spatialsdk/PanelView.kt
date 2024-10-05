@@ -1,6 +1,7 @@
 package com.jpiasecki.spatialsdk
 
 import com.facebook.react.bridge.ReactContext
+import com.facebook.react.uimanager.UIManagerHelper
 import com.facebook.react.views.view.ReactViewGroup
 import com.meta.spatial.core.Entity
 import com.meta.spatial.core.Pose
@@ -9,7 +10,7 @@ import com.meta.spatial.core.Vector3
 import com.meta.spatial.toolkit.Transform
 import com.meta.spatial.toolkit.createPanelEntity
 
-class PanelView(reactContext: ReactContext) :
+class PanelView(private val reactContext: ReactContext) :
   ReactViewGroup(reactContext),
   EntityHolder {
   private var panelId = -1
@@ -50,6 +51,7 @@ class PanelView(reactContext: ReactContext) :
     data?.entity = Entity.createPanelEntity(
       panelId,
       Transform(Pose(position, orientation)),
+      ObserverComponent(UIManagerHelper.getSurfaceId(this), this.id),
     )
 
     tryAttachComponents(this)
