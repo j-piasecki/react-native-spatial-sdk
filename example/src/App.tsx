@@ -4,7 +4,7 @@ import { Orientation, Position, usePanel } from 'react-native-spatial-sdk';
 
 function PanelView() {
   return (
-    <View style={{ flex: 1, backgroundColor: 'red' }}>
+    <View style={{ flex: 1, backgroundColor: 'red', borderRadius: 80, padding: 16 }}>
       <Text>Panel</Text>
     </View>
   );
