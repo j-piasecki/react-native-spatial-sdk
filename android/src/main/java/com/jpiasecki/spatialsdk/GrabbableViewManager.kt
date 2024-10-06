@@ -27,6 +27,12 @@ class GrabbableViewManager :
     view.setType(type)
   }
 
+  override fun getExportedCustomDirectEventTypeConstants(): MutableMap<String, Any> =
+    mutableMapOf(
+      GrabStartEvent.NAME to mapOf("registrationName" to "onStart"),
+      GrabEndEvent.NAME to mapOf("registrationName" to "onEnd"),
+    )
+
   companion object {
     const val NAME = "RNSpatialGrabbableView"
   }

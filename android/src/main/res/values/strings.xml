@@ -6,4 +6,10 @@
   <string name="observer_component_view_tag" translatable="false">observer_component:view_tag</string>
   <string name="observer_component_last_position" translatable="false">observer_component:last_position</string>
   <string name="observer_component_last_orientation" translatable="false">observer_component:last_orientation</string>
+
+  <string name="grabbable_observer_component_class" translatable="false">grabbable_observer_component:class</string>
+  <string name="grabbable_observer_component_enabled" translatable="false">grabbable_observer_component:enabled</string>
+  <string name="grabbable_observer_component_surface_id" translatable="false">grabbable_observer_component:surface_id</string>
+  <string name="grabbable_observer_component_view_tag" translatable="false">grabbable_observer_component:view_tag</string>
+  <string name="grabbable_observer_component_is_active" translatable="false">grabbable_observer_component:is_active</string>
 </resources>

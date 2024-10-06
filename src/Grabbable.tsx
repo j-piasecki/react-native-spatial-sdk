@@ -1,6 +1,7 @@
 import GrabbableNativeComponent from './specs/GrabbableNativeComponent';
 import type { PropsWithChildren } from 'react';
 import React from 'react';
+import type { NativeSyntheticEvent } from 'react-native';
 
 export enum GrabbableType {
   Face = 'face',
@@ -10,6 +11,9 @@ export enum GrabbableType {
 export interface GrabbableProps {
   enabled?: boolean;
   type?: GrabbableType;
+
+  onStart?: (event: NativeSyntheticEvent<{}>) => void;
+  onEnd?: (event: NativeSyntheticEvent<{}>) => void;
 }
 
 export const Grabbable = React.forwardRef<

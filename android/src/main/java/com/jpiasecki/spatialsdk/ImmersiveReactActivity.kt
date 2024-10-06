@@ -51,6 +51,7 @@ open class ImmersiveReactActivity :
     reactSurface.start()
 
     componentManager.registerComponent<ObserverComponent>(ObserverComponent.Companion)
+    componentManager.registerComponent<GrabbableObserverComponent>(GrabbableObserverComponent.Companion)
 
     systemManager.registerSystem(ObserverSystem(app))
   }

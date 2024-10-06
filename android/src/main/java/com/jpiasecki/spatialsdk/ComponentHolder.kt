@@ -8,14 +8,18 @@ import com.meta.spatial.core.Entity
 interface ComponentHolder {
   val component: ComponentBase
 
-  fun tryAttachToEntity(view: ViewGroup) {
+  fun findEntity(view: ViewGroup): EntityHolder? {
     var current = view
 
     while (current !is EntityHolder) {
-      current = current.children.firstOrNull() as? ViewGroup ?: return
+      current = current.children.firstOrNull() as? ViewGroup ?: return null
     }
 
-    val entity = (current as EntityHolder).entity ?: return
+    return current
+  }
+
+  fun tryAttachToEntity(view: ViewGroup) {
+    val entity = findEntity(view)?.entity ?: return
     entity.setComponent(component)
   }
 
