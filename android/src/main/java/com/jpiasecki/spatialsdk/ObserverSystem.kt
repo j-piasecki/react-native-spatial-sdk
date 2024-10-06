@@ -19,7 +19,7 @@ class ObserverSystem(private val reactApplication: ReactApplication) : SystemBas
         continue
       }
 
-      if (transform.transform.t != observer.previousPosition) {
+      if (!transform.transform.t.almostEquals(observer.previousPosition)) {
         observer.previousPosition = transform.transform.t
 
         val event = PositionChangeEvent(observer.surfaceId, observer.viewTag, transform.transform.t)
@@ -28,7 +28,7 @@ class ObserverSystem(private val reactApplication: ReactApplication) : SystemBas
       }
 
       val eulerOrientation = transform.transform.q.toEuler()
-      if (eulerOrientation != observer.previousOrientation) {
+      if (!eulerOrientation.almostEquals(observer.previousOrientation)) {
         observer.previousOrientation = eulerOrientation
 
         val event = OrientationChangeEvent(observer.surfaceId, observer.viewTag, eulerOrientation)

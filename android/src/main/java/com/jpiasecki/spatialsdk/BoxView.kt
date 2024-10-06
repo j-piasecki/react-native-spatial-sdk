@@ -60,7 +60,7 @@ class BoxView(private val reactContext: ReactContext) :
       it.setComponent(transform)
 
       val observer = it.getComponent<ObserverComponent>()
-      observer.previousOrientation = Vector3(pitch, yaw, roll)
+      observer.previousOrientation = this.orientation.toEuler()
       it.setComponent(observer)
     }
   }
@@ -118,6 +118,6 @@ class BoxView(private val reactContext: ReactContext) :
 
   override fun onDetachedFromWindow() {
     super.onDetachedFromWindow()
-    PanelRegistry.getPanel(panelId)?.stopSurface()
+    entity?.destroy()
   }
 }
