@@ -9,30 +9,22 @@ import com.meta.spatial.core.Entity
 import com.meta.spatial.core.Pose
 import com.meta.spatial.core.Quaternion
 import com.meta.spatial.core.Vector3
-import com.meta.spatial.toolkit.Box
 import com.meta.spatial.toolkit.Mesh
 import com.meta.spatial.toolkit.Transform
 import com.meta.spatial.toolkit.TransformParent
 
-class BoxView(private val reactContext: ReactContext) :
+class MeshView(private val reactContext: ReactContext) :
   ReactViewGroup(reactContext),
   EntityHolder {
   override var entity: Entity? = null
     private set
 
-  private var width = 1f
-  private var height = 1f
-  private var depth = 1f
+  private var mesh: String? = null
 
   private var position = Vector3(0f, 1.3f, 2f)
   private var orientation = Quaternion(0f, 0f, 0f)
 
   private var positionRelativeToParent = true
-
-  private fun makeBox() = Box(
-    Vector3(-width / 2, -height / 2, -depth / 2),
-    Vector3(width / 2, height / 2, depth / 2),
-  )
 
   fun setPosition(x: Float, y: Float, z: Float) {
     this.position = Vector3(x, y, z)
@@ -62,19 +54,9 @@ class BoxView(private val reactContext: ReactContext) :
     }
   }
 
-  fun setWidth(width: Float) {
-    this.width = width
-    entity?.setComponent(makeBox())
-  }
-
-  fun setHeight(height: Float) {
-    this.height = height
-    entity?.setComponent(makeBox())
-  }
-
-  fun setDepth(depth: Float) {
-    this.depth = depth
-    entity?.setComponent(makeBox())
+  fun setMesh(mesh: String) {
+    this.mesh = mesh
+    entity?.setComponent(Mesh(Uri.parse(mesh)))
   }
 
   fun setPositionRelativeToParent(value: Boolean) {
@@ -100,12 +82,14 @@ class BoxView(private val reactContext: ReactContext) :
     val parentEntity = if (positionRelativeToParent) findParentEntity() else Entity.nullEntity()
 
     entity = Entity.create(
-      Mesh(Uri.parse("mesh://box")),
-      makeBox(),
       Transform(Pose(position, orientation)),
       ObserverComponent(UIManagerHelper.getSurfaceId(this), this.id),
       TransformParent(parentEntity),
     )
+
+    if (mesh != null) {
+      entity!!.setComponent(Mesh(Uri.parse(mesh)))
+    }
 
     tryAttachComponents(this)
   }

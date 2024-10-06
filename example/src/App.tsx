@@ -12,6 +12,7 @@ import {
   Grabbable,
   GrabbableType,
   Material,
+  Mesh,
   Scale,
   usePanel,
 } from 'react-native-spatial-sdk';
@@ -151,6 +152,8 @@ function Content() {
               </Material>
             </Grabbable>
           ))}
+
+          <Mesh mesh="speaker.glb" />
         </Panel>
       </Grabbable>
     </View>

@@ -15,6 +15,7 @@ class SpatialSdkPackage : TurboReactPackage() {
       BoxViewManager(),
       MaterialViewManager(),
       ScaleViewManager(),
+      MeshViewManager(),
     )
 
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? =
