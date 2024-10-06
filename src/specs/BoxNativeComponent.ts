@@ -2,7 +2,7 @@ import type { ViewProps } from 'react-native';
 import type {
   DirectEventHandler,
   Double,
-  Int32,
+  WithDefault,
 } from 'react-native/Libraries/Types/CodegenTypes';
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 
@@ -22,10 +22,12 @@ export interface NativeProps extends ViewProps {
   onPositionChange?: DirectEventHandler<PositionChangeEvent>;
   onOrientationChange?: DirectEventHandler<OrientationChangeEvent>;
 
-  panelId: Int32;
+  width: Double;
+  height: Double;
+  depth: Double;
   position?: number[];
   orientation?: number[];
-  positionRelativeToParent?: boolean;
+  positionRelativeToParent?: WithDefault<boolean, true>;
 }
 
-export default codegenNativeComponent<NativeProps>('RNSpatialPanelView');
+export default codegenNativeComponent<NativeProps>('RNSpatialBoxView');

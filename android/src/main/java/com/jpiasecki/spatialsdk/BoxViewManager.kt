@@ -4,25 +4,21 @@ import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
-import com.facebook.react.viewmanagers.RNSpatialPanelViewManagerDelegate
-import com.facebook.react.viewmanagers.RNSpatialPanelViewManagerInterface
+import com.facebook.react.viewmanagers.RNSpatialBoxViewManagerDelegate
+import com.facebook.react.viewmanagers.RNSpatialBoxViewManagerInterface
 
 @ReactModule(name = PanelViewManager.NAME)
-class PanelViewManager :
-  ViewGroupManager<PanelView>(),
-  RNSpatialPanelViewManagerInterface<PanelView> {
-  private val delegate = RNSpatialPanelViewManagerDelegate(this)
+class BoxViewManager :
+  ViewGroupManager<BoxView>(),
+  RNSpatialBoxViewManagerInterface<BoxView> {
+  private val delegate = RNSpatialBoxViewManagerDelegate(this)
 
   override fun getDelegate() = delegate
   override fun getName() = NAME
 
-  override fun createViewInstance(reactContext: ThemedReactContext): PanelView = PanelView(reactContext)
+  override fun createViewInstance(reactContext: ThemedReactContext): BoxView = BoxView(reactContext)
 
-  override fun setPanelId(view: PanelView, id: Int) {
-    view.setPanelId(id)
-  }
-
-  override fun setPosition(view: PanelView, value: ReadableArray?) {
+  override fun setPosition(view: BoxView, value: ReadableArray?) {
     if (value != null) {
       view.setPosition(
         value.getDouble(0).toFloat(),
@@ -32,7 +28,7 @@ class PanelViewManager :
     }
   }
 
-  override fun setOrientation(view: PanelView, value: ReadableArray?) {
+  override fun setOrientation(view: BoxView, value: ReadableArray?) {
     if (value != null) {
       view.setOrientation(
         value.getDouble(0).toFloat(),
@@ -42,7 +38,19 @@ class PanelViewManager :
     }
   }
 
-  override fun setPositionRelativeToParent(view: PanelView, value: Boolean) {
+  override fun setWidth(view: BoxView, value: Double) {
+    view.setWidth(value.toFloat())
+  }
+
+  override fun setHeight(view: BoxView, value: Double) {
+    view.setHeight(value.toFloat())
+  }
+
+  override fun setDepth(view: BoxView, value: Double) {
+    view.setDepth(value.toFloat())
+  }
+
+  override fun setPositionRelativeToParent(view: BoxView, value: Boolean) {
     view.setPositionRelativeToParent(value)
   }
 
@@ -53,6 +61,6 @@ class PanelViewManager :
     )
 
   companion object {
-    const val NAME = "RNSpatialPanelView"
+    const val NAME = "RNSpatialBoxView"
   }
 }

@@ -1,7 +1,13 @@
 import type { PanelConfig } from './specs/NativeSpatialPanelModule';
 import NativePanelModule from './specs/NativeSpatialPanelModule';
 import PanelNativeComponent from './specs/PanelNativeComponent';
-import { useCallback, useState } from 'react';
+import type {
+  Position,
+  Orientation,
+  OrientationChangeEvent,
+  PositionChangeEvent,
+} from './types';
+import { useCallback, useState, type PropsWithChildren } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -11,24 +17,11 @@ import {
 const ENTRY_POINT_PREFIX = '_SpatialEntryPoint_';
 let nextEntryPointId = 0;
 
-export type Position = [x: number, y: number, z: number];
-export type Orientation = [pitch: number, yaw: number, roll: number];
-
-type PositionChangeEvent = {
-  x: number;
-  y: number;
-  z: number;
-};
-
-type OrientationChangeEvent = {
-  pitch: number;
-  yaw: number;
-  roll: number;
-};
-
 interface PanelProps {
   position?: Position;
   orientation?: Orientation;
+
+  positionRelativeToParent?: boolean;
 
   onPositionChange?: (event: NativeSyntheticEvent<PositionChangeEvent>) => void;
   onOrientationChange?: (
@@ -48,15 +41,17 @@ export function usePanel(content: React.ComponentType, config: PanelConfig) {
   });
 
   const panelComponent = useCallback(
-    (props: PanelProps) => {
+    (props: PropsWithChildren<PanelProps>) => {
       return (
         <PanelNativeComponent
           panelId={panelId}
           style={styles.panel}
           position={props.position}
           orientation={props.orientation}
+          positionRelativeToParent={props.positionRelativeToParent}
           onPositionChange={props.onPositionChange}
           onOrientationChange={props.onOrientationChange}
+          children={props.children}
         />
       );
     },

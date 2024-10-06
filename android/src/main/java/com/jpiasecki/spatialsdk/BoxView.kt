@@ -1,5 +1,6 @@
 package com.jpiasecki.spatialsdk
 
+import android.net.Uri
 import android.view.ViewGroup
 import com.facebook.react.bridge.ReactContext
 import com.facebook.react.uimanager.UIManagerHelper
@@ -8,27 +9,33 @@ import com.meta.spatial.core.Entity
 import com.meta.spatial.core.Pose
 import com.meta.spatial.core.Quaternion
 import com.meta.spatial.core.Vector3
+import com.meta.spatial.toolkit.Box
+import com.meta.spatial.toolkit.Color4
+import com.meta.spatial.toolkit.Material
+import com.meta.spatial.toolkit.Mesh
 import com.meta.spatial.toolkit.Transform
 import com.meta.spatial.toolkit.TransformParent
-import com.meta.spatial.toolkit.createPanelEntity
 
-class PanelView(private val reactContext: ReactContext) :
+class BoxView(private val reactContext: ReactContext) :
   ReactViewGroup(reactContext),
   EntityHolder {
   private var panelId = -1
-  private var data: PanelData? = null
-  override val entity: Entity?
-    get() = data?.entity
+  override var entity: Entity? = null
+    private set
+
+  private var width = 1f
+  private var height = 1f
+  private var depth = 1f
 
   private var position = Vector3(0f, 1.3f, 2f)
   private var orientation = Quaternion(0f, 0f, 0f)
 
-  private var positionRelativeToParent = false
+  private var positionRelativeToParent = true
 
-  fun setPanelId(id: Int) {
-    panelId = id
-    data = PanelRegistry.getPanel(panelId)
-  }
+  private fun makeBox() = Box(
+    Vector3(-width / 2, -height / 2, -depth / 2),
+    Vector3(width / 2, height / 2, depth / 2),
+  )
 
   fun setPosition(x: Float, y: Float, z: Float) {
     this.position = Vector3(x, y, z)
@@ -58,6 +65,21 @@ class PanelView(private val reactContext: ReactContext) :
     }
   }
 
+  fun setWidth(width: Float) {
+    this.width = width
+    entity?.setComponent(makeBox())
+  }
+
+  fun setHeight(height: Float) {
+    this.height = height
+    entity?.setComponent(makeBox())
+  }
+
+  fun setDepth(depth: Float) {
+    this.depth = depth
+    entity?.setComponent(makeBox())
+  }
+
   fun setPositionRelativeToParent(value: Boolean) {
     positionRelativeToParent = value
     val parentEntity = if (positionRelativeToParent) findParentEntity() else Entity.nullEntity()
@@ -80,10 +102,14 @@ class PanelView(private val reactContext: ReactContext) :
 
     val parentEntity = if (positionRelativeToParent) findParentEntity() else Entity.nullEntity()
 
-    data?.entity = Entity.createPanelEntity(
-      panelId,
+    entity = Entity.create(
+      Mesh(Uri.parse("mesh://box")),
+      makeBox(),
       Transform(Pose(position, orientation)),
       ObserverComponent(UIManagerHelper.getSurfaceId(this), this.id),
+      Material().apply {
+        baseColor = Color4(red = 1.0f, green = 0.1f, blue = 0.1f, alpha = 1.0f)
+      },
       TransformParent(parentEntity),
     )
 
