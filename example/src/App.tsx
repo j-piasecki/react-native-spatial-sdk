@@ -1,13 +1,26 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import Animated, {
+  useAnimatedProps,
+  useEvent,
+  useFrameCallback,
+  useSharedValue,
+} from 'react-native-reanimated';
 import {
   Box,
   Grabbable,
   GrabbableType,
   usePanel,
 } from 'react-native-spatial-sdk';
-import type { BoxProps, Orientation, Position } from 'react-native-spatial-sdk';
+import type {
+  BoxProps,
+  Orientation,
+  OrientationChangeEvent,
+  Position,
+} from 'react-native-spatial-sdk';
+
+const AnimatedBox = Animated.createAnimatedComponent(Box);
 
 function PanelView() {
   return (
@@ -19,11 +32,47 @@ function PanelView() {
   );
 }
 
+function SpinningBox(props: BoxProps) {
+  const pitch = useSharedValue(0);
+  const roll = useSharedValue(0);
+  const yaw = useSharedValue(0);
+
+  const handler = useEvent(
+    (event: OrientationChangeEvent) => {
+      'worklet';
+      pitch.value = event.pitch;
+      roll.value = event.roll;
+      yaw.value = event.yaw;
+    },
+    ['onOrientationChange']
+  );
+
+  useFrameCallback((frameInfo) => {
+    if (frameInfo.timeSincePreviousFrame) {
+      yaw.value += (0.5 * frameInfo.timeSincePreviousFrame) / 16;
+    }
+  });
+
+  const animatedProps = useAnimatedProps(() => {
+    return {
+      orientation: [pitch.value, yaw.value, roll.value],
+    };
+  });
+
+  return (
+    <AnimatedBox
+      {...props}
+      animatedProps={animatedProps}
+      onOrientationChange={handler}
+    />
+  );
+}
+
 function Content() {
   const Panel = usePanel(PanelView, { width: 1, height: 1 });
   const [anchored, setAnchored] = useState(false);
-  const [position, _setPosition] = useState<Position>([2, 1.3, 2]);
-  const [orientation, setOrientation] = useState<Orientation>([0, 20, 0]);
+  const [position, _setPosition] = useState<Position>([0, 1.3, 2]);
+  const [orientation, setOrientation] = useState<Orientation>([0, 0, 0]);
   const [boxesRelative, setBoxesRelative] = useState(false);
   const [boxes, setBoxes] = useState<BoxProps[]>([]);
 
@@ -90,13 +139,7 @@ function Content() {
         >
           {boxes.map((box, index) => (
             <Grabbable key={index} type={GrabbableType.PivotY}>
-              <Box
-                {...box}
-                positionRelativeToParent={boxesRelative}
-                onPositionChange={(e) => {
-                  console.log('box position change', e.nativeEvent);
-                }}
-              />
+              <SpinningBox {...box} positionRelativeToParent={boxesRelative} />
             </Grabbable>
           ))}
         </Panel>
