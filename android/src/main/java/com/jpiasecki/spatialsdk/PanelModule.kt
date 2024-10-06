@@ -1,8 +1,5 @@
 package com.jpiasecki.spatialsdk
 
-import android.graphics.Color
-import android.view.View
-import androidx.core.view.doOnAttach
 import com.facebook.react.ReactApplication
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactMethod
@@ -12,15 +9,6 @@ import com.meta.spatial.toolkit.PanelRegistration
 class PanelModule(reactContext: ReactApplicationContext) : NativeSpatialPanelModuleSpec(reactContext) {
 
   override fun getName() = NAME
-
-  private fun clearBackgroundUpwards(view: View) {
-    view.setBackgroundColor(Color.TRANSPARENT)
-
-    val parent = view.parent
-    if (parent is View) {
-      clearBackgroundUpwards(parent)
-    }
-  }
 
   @ReactMethod
   override fun registerPanel(entryPoint: String, config: ReadableMap): Double {
@@ -46,10 +34,6 @@ class PanelModule(reactContext: ReactApplicationContext) : NativeSpatialPanelMod
           val reactSurface = app.reactHost?.createSurface(activity, entryPoint, null)!!
           reactSurface.start()
           PanelRegistry.getPanel(id)!!.reactSurface = reactSurface
-          // TODO: check if necessary
-          reactSurface.view!!.doOnAttach {
-            clearBackgroundUpwards(it)
-          }
           reactSurface.view!!
         }
       },
