@@ -12,7 +12,10 @@ export interface GrabbableProps {
   type?: GrabbableType;
 }
 
-export function Grabbable(props: PropsWithChildren<GrabbableProps>) {
+export const Grabbable = React.forwardRef<
+  any,
+  PropsWithChildren<GrabbableProps>
+>((props, ref) => {
   if (__DEV__) {
     try {
       React.Children.only(props.children);
@@ -21,5 +24,5 @@ export function Grabbable(props: PropsWithChildren<GrabbableProps>) {
     }
   }
 
-  return <GrabbableNativeComponent {...props} />;
-}
+  return <GrabbableNativeComponent {...props} ref={ref} />;
+});

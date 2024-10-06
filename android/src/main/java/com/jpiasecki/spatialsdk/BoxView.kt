@@ -10,8 +10,6 @@ import com.meta.spatial.core.Pose
 import com.meta.spatial.core.Quaternion
 import com.meta.spatial.core.Vector3
 import com.meta.spatial.toolkit.Box
-import com.meta.spatial.toolkit.Color4
-import com.meta.spatial.toolkit.Material
 import com.meta.spatial.toolkit.Mesh
 import com.meta.spatial.toolkit.Transform
 import com.meta.spatial.toolkit.TransformParent
@@ -107,9 +105,6 @@ class BoxView(private val reactContext: ReactContext) :
       makeBox(),
       Transform(Pose(position, orientation)),
       ObserverComponent(UIManagerHelper.getSurfaceId(this), this.id),
-      Material().apply {
-        baseColor = Color4(red = 1.0f, green = 0.1f, blue = 0.1f, alpha = 1.0f)
-      },
       TransformParent(parentEntity),
     )
 

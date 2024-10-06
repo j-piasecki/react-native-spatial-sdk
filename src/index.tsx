@@ -11,3 +11,6 @@ export type { GrabbableProps } from './Grabbable';
 
 export { Box } from './Box';
 export type { BoxProps } from './Box';
+
+export { Material } from './Material';
+export type { MaterialProps } from './Material';

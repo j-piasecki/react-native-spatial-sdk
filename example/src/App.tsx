@@ -11,6 +11,7 @@ import {
   Box,
   Grabbable,
   GrabbableType,
+  Material,
   usePanel,
 } from 'react-native-spatial-sdk';
 import type {
@@ -139,7 +140,12 @@ function Content() {
         >
           {boxes.map((box, index) => (
             <Grabbable key={index} type={GrabbableType.PivotY}>
-              <SpinningBox {...box} positionRelativeToParent={boxesRelative} />
+              <Material color="blue">
+                <SpinningBox
+                  {...box}
+                  positionRelativeToParent={boxesRelative}
+                />
+              </Material>
             </Grabbable>
           ))}
         </Panel>
