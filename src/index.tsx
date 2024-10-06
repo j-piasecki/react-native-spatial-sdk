@@ -14,3 +14,6 @@ export type { BoxProps } from './Box';
 
 export { Material } from './Material';
 export type { MaterialProps } from './Material';
+
+export { Scale } from './Scale';
+export type { ScaleProps, ScaleValue } from './Scale';
