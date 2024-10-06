@@ -1,5 +1,10 @@
 export { usePanel } from './usePanel';
-export type { Orientation, Position } from './types';
+export type {
+  Orientation,
+  Position,
+  OrientationChangeEvent,
+  PositionChangeEvent,
+} from './types';
 
 export { Grabbable, GrabbableType } from './Grabbable';
 export type { GrabbableProps } from './Grabbable';

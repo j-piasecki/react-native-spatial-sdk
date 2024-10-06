@@ -63,7 +63,7 @@ open class ImmersiveReactActivity :
 
     Entity.createPanelEntity(
       R.id.main_panel,
-      Transform(Pose(Vector3(0f, 1.3f, 2f), Quaternion(0f, 0f, 0f))),
+      Transform(Pose(Vector3(-2f, 1.3f, 2f), Quaternion(0f, -40f, 0f))),
       Grabbable(),
     )
   }

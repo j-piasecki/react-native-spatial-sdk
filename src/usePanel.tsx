@@ -7,7 +7,7 @@ import type {
   OrientationChangeEvent,
   PositionChangeEvent,
 } from './types';
-import { useCallback, useState, type PropsWithChildren } from 'react';
+import React, { useMemo, useState, type PropsWithChildren } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -40,23 +40,25 @@ export function usePanel(content: React.ComponentType, config: PanelConfig) {
     return id;
   });
 
-  const panelComponent = useCallback(
-    (props: PropsWithChildren<PanelProps>) => {
-      return (
-        <PanelNativeComponent
-          panelId={panelId}
-          style={styles.panel}
-          position={props.position}
-          orientation={props.orientation}
-          positionRelativeToParent={props.positionRelativeToParent}
-          onPositionChange={props.onPositionChange}
-          onOrientationChange={props.onOrientationChange}
-          children={props.children}
-        />
-      );
-    },
-    [panelId]
-  );
+  const panelComponent = useMemo(() => {
+    return React.forwardRef<any, PropsWithChildren<PanelProps>>(
+      (props, ref) => {
+        return (
+          <PanelNativeComponent
+            ref={ref}
+            panelId={panelId}
+            style={styles.panel}
+            position={props.position}
+            orientation={props.orientation}
+            positionRelativeToParent={props.positionRelativeToParent}
+            onPositionChange={props.onPositionChange}
+            onOrientationChange={props.onOrientationChange}
+            children={props.children}
+          />
+        );
+      }
+    );
+  }, [panelId]);
 
   return panelComponent;
 }
